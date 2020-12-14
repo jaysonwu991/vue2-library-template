@@ -1,37 +1,3 @@
-# vue-clock-simple
+# vue2-library-template
 
-A Vue component that shows a clock.
-
-This isn't particularly useful, it's used as a demo for how to publish Vue components to NPM!
-
-## Installation
-
-```js
-npm i --save-dev vue-clock-simple
-```
-
-### Browser
-
-Include the script file, then install the component with `Vue.use(VueClock);` e.g.:
-
-```html
-<script type="text/javascript" src="node_modules/vuejs/dist/vue.min.js"></script>
-<script type="text/javascript" src="node_modules/vue-clock-simple/dist/vue-clock.min.js"></script>
-<script type="text/javascript">
-  Vue.use(VueClock);
-</script>
-```
-
-### Module
-
-```js
-import VueClock from 'vue-clock-simple';
-```
-
-## Usage
-
-Once installed, it can be used in a template as simply as:
-
-```html
-<vue-clock></vue-clock>
-```
+> A Vue 2.x Library Template, This project makes it easy for you to publish your own Vue 2.x component to `npm`, It is built through webpack 5.x and the library built can be used on the `browser` and 'node` sides.
