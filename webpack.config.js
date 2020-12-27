@@ -4,9 +4,11 @@ const ESLintPlugin = require('eslint-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 const config = {
+  mode: 'production',
+  target: [ 'web', 'es5' ],
   resolve: {
     extensions: [ '.js', '.vue' ]
   },
@@ -92,12 +94,8 @@ const config = {
       new TerserPlugin({
         parallel: true
       }),
-      new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: {
-          map: {
-            inline: false
-          }
-        }
+      new CssMinimizerPlugin({
+        sourceMap: true
       })
     ]
   }
