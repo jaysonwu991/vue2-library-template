@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jayson991/vue2-library-template"
+    "url": "git+https://github.com:jayson991/vue2-library-template.git"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

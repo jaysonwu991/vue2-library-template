@@ -38,7 +38,7 @@
     ],
     "array-bracket-spacing": [
       2,
-      "always"
+      "never"
     ],
     "comma-spacing": [
       2,

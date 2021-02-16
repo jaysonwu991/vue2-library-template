@@ -8,9 +8,9 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 const config = {
   mode: 'production',
-  target: [ 'web', 'es5' ],
+  target: ['web', 'es5'],
   resolve: {
-    extensions: [ '.js', '.vue' ]
+    extensions: ['.js', '.vue']
   },
   module: {
     rules: [
@@ -18,13 +18,13 @@ const config = {
         test: /\.vue$/,
         loader: 'vue-loader',
         exclude: /node_modules/,
-        include: [ path.resolve(__dirname, './src') ]
+        include: [path.resolve(__dirname, './src')]
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        include: [ path.resolve(__dirname, './src') ]
+        include: [path.resolve(__dirname, './src')]
       },
       {
         test: /\.s?[ac]ss$/,
