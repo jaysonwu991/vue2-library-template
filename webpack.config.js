@@ -1,16 +1,16 @@
-const path = require('path')
-const { merge } = require('webpack-merge')
-const ESLintPlugin = require('eslint-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const path = require('path');
+const { merge } = require('webpack-merge');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const config = {
   mode: 'production',
   target: ['web', 'es5'],
   resolve: {
-    extensions: ['.js', '.vue']
+    extensions: ['.js', '.vue'],
   },
   module: {
     rules: [
@@ -18,60 +18,101 @@ const config = {
         test: /\.vue$/,
         loader: 'vue-loader',
         exclude: /node_modules/,
-        include: [path.resolve(__dirname, './src')]
+        include: [path.resolve(__dirname, './src')],
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
         exclude: /node_modules/,
-        include: [path.resolve(__dirname, './src')]
+        include: [path.resolve(__dirname, './src')],
+        use: [
+          {
+            loader: require.resolve('swc-loader'),
+            options: {
+              jsc: {
+                parser: {
+                  jsx: true,
+                  dynamicImport: true,
+                  syntax: 'ecmascript',
+                },
+                transform: {
+                  react: {
+                    useBuiltins: true,
+                  },
+                },
+                minify: {
+                  mangle: true,
+                  compress: {
+                    unused: true,
+                  },
+                },
+              },
+              minify: true,
+            },
+          },
+          {
+            loader: require.resolve('esbuild-loader'),
+            options: {
+              target: 'es2015',
+            },
+          },
+        ],
       },
       {
         test: /\.s?[ac]ss$/,
         use: [
           MiniCSSExtractPlugin.loader,
           'css-loader',
-          'postcss-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                ident: 'postcss',
+                plugins: {
+                  autoprefixer: {},
+                },
+              },
+            },
+          },
           {
             loader: 'sass-loader',
             options: {
-              implementation: require('sass')
-            }
-          }
-        ]
+              implementation: require('sass'),
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         type: 'asset/resource',
         generator: {
-          filename: 'imgs/[name].[hash:7].[ext]'
-        }
+          filename: 'imgs/[name].[hash:7].[ext]',
+        },
       },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         type: 'asset/resource',
         generator: {
-          filename: 'media/[name].[hash:7].[ext]'
-        }
+          filename: 'media/[name].[hash:7].[ext]',
+        },
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         type: 'asset/resource',
         generator: {
-          filename: 'fonts/[name].[hash:7].[ext]'
-        }
-      }
-    ]
+          filename: 'fonts/[name].[hash:7].[ext]',
+        },
+      },
+    ],
   },
   plugins: [
     new ESLintPlugin({
-      formatter: require('eslint-friendly-formatter')
+      formatter: require('eslint-friendly-formatter'),
     }),
     new VueLoaderPlugin(),
     new MiniCSSExtractPlugin({
       filename: 'css/[name].[hash].css',
-      chunkFilename: 'css/[id].[hash].css'
-    })
+      chunkFilename: 'css/[id].[hash].css',
+    }),
   ],
   optimization: {
     minimize: true,
@@ -86,20 +127,25 @@ const config = {
           minChunks: 2,
           maxInitialRequests: 5,
           minSize: 0,
-          name: 'common'
-        }
-      }
+          name: 'common',
+        },
+      },
     },
     minimizer: [
       new TerserPlugin({
-        parallel: true
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
       }),
       new CssMinimizerPlugin({
-        sourceMap: true
-      })
-    ]
-  }
-}
+        parallel: true,
+      }),
+    ],
+  },
+};
 
 module.exports = [
   merge(config, {
@@ -108,10 +154,10 @@ module.exports = [
       path: path.resolve(__dirname, './lib'),
       publicPath: '/lib/',
       filename: 'vue-clock.js',
-      library: 'vue-clock', // 模块名称
-      libraryTarget: 'umd', // 输出格式
-      umdNamedDefine: true // 是否将模块名称作为 AMD 输出的命名空间
-    }
+      library: 'vue-clock',
+      libraryTarget: 'umd',
+      umdNamedDefine: true,
+    },
   }),
   merge(config, {
     entry: path.resolve(__dirname + '/src/plugin.js'),
@@ -120,7 +166,7 @@ module.exports = [
       publicPath: '/lib/',
       filename: 'vue-clock.min.js',
       libraryTarget: 'window',
-      library: 'VueClock'
-    }
-  })
-]
+      library: 'VueClock',
+    },
+  }),
+];

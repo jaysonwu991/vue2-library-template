@@ -7,16 +7,5 @@
         "useBuiltIns": "usage"
       }
     ]
-  ],
-  "plugins": [
-    "@babel/plugin-transform-runtime",
-    "@babel/plugin-syntax-import-meta",
-    "@babel/plugin-proposal-json-strings",
-    "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-proposal-object-rest-spread",
-    "@babel/plugin-proposal-export-default-from",
-    "@babel/plugin-transform-async-to-generator",
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-class-properties", { "loose" : true }]
   ]
 }
