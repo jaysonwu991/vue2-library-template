@@ -14,8 +14,8 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  extends: ['eslint:recommended', 'plugin:vue/recommended', 'prettier/prettier'],
   plugins: ['babel', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:vue/recommended', 'prettier/prettier'],
   rules: {
     'prettier/prettier': 0,
     semi: [2, 'always'],
