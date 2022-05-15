@@ -9,3 +9,4 @@
     - Bundler: Webpack 5.x
     - Build Tools: Esbuild + SWC
     - Linter: Eslint + Prettier
+    - Bundling Types: UMD + Browser
